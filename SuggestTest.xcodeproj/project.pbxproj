@@ -13,6 +13,8 @@
 		B2F0A113288BA7A600C97D13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2F0A111288BA7A600C97D13 /* Main.storyboard */; };
 		B2F0A115288BA7A700C97D13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2F0A114288BA7A700C97D13 /* Assets.xcassets */; };
 		B2F0A118288BA7A700C97D13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2F0A116288BA7A700C97D13 /* LaunchScreen.storyboard */; };
+		B2F0A121288BA86400C97D13 /* Kanna in Frameworks */ = {isa = PBXBuildFile; productRef = B2F0A120288BA86400C97D13 /* Kanna */; };
+		B2F0A124288BB69900C97D13 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B2F0A123288BB69900C97D13 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2F0A121288BA86400C97D13 /* Kanna in Frameworks */,
+				B2F0A124288BB69900C97D13 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +87,10 @@
 			dependencies = (
 			);
 			name = SuggestTest;
+			packageProductDependencies = (
+				B2F0A120288BA86400C97D13 /* Kanna */,
+				B2F0A123288BB69900C97D13 /* SnapKit */,
+			);
 			productName = SuggestTest;
 			productReference = B2F0A108288BA7A600C97D13 /* SuggestTest.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +119,10 @@
 				Base,
 			);
 			mainGroup = B2F0A0FF288BA7A600C97D13;
+			packageReferences = (
+				B2F0A11F288BA86400C97D13 /* XCRemoteSwiftPackageReference "Kanna" */,
+				B2F0A122288BB69900C97D13 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = B2F0A109288BA7A600C97D13 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -358,6 +370,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B2F0A11F288BA86400C97D13 /* XCRemoteSwiftPackageReference "Kanna" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tid-kijyun/Kanna.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		B2F0A122288BB69900C97D13 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B2F0A120288BA86400C97D13 /* Kanna */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2F0A11F288BA86400C97D13 /* XCRemoteSwiftPackageReference "Kanna" */;
+			productName = Kanna;
+		};
+		B2F0A123288BB69900C97D13 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2F0A122288BB69900C97D13 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B2F0A100288BA7A600C97D13 /* Project object */;
 }
