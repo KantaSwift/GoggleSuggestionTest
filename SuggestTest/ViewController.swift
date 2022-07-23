@@ -12,7 +12,7 @@ import SnapKit
 
 class ViewController: UIViewController {
     
-    let tableView = UITableView()
+    let tableView = UITableView(frame: .zero, style: .plain)
     let searchBar = UISearchBar()
     var suggest = [String]()
     var api = GoogleSuggestion()
@@ -32,23 +32,23 @@ class ViewController: UIViewController {
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         searchBar.delegate = self
-        tableView.delegate = self
+        tableView.dataSource = self
         
         
         searchBar.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.left.right.equalToSuperview()
-            $0.bottom.equalTo(tableView.snp.top)
+            $0.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            
+            $0.height.equalTo(50)
         }
         
         tableView.snp.makeConstraints{
-            $0.left.right.bottom.equalToSuperview()
+            $0.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.top.equalTo(searchBar.snp.bottom)
         }
     }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return suggest.count
