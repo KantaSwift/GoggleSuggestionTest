@@ -12,22 +12,16 @@ import SnapKit
 
 class ViewController: UIViewController {
     
-    let api = GoogleSuggestion(searchText: "Swift")
     let tableView = UITableView()
     let searchBar = UISearchBar()
     var suggest = [String]()
+    var api = GoogleSuggestion()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Task {
-            guard let suggestion = try? await api?.getSuggestion() else { return }
-            self.suggest = suggestion
-            tableView.reloadData()
-//            print(suggest)
-        }
-       
+      
         layout()
         // Do any additional setup after loading the view.
     }
@@ -72,32 +66,36 @@ extension ViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 //      print("変更されました")
-       
+        Task {
+            guard let suggestion = try? await api.getSuggestions(searchText: searchText) else { return }
+            self.suggest = suggestion
+            tableView.reloadData()
+//            print(suggest)
+        }
     }
     
 }
 
 class GoogleSuggestion {
-    private var apiURL = "https://www.google.com/complete/search?hl=en&output=toolbar&q="
     
-    let url: URL
+    private let apiURL = "https://www.google.com/complete/search?hl=en&output=toolbar&q="
     
-    init?(searchText: String) {
+    func getSuggestions(searchText: String) async throws -> [String] {
         guard let percentEncoding = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let url = URL(string: apiURL + percentEncoding) else { return nil}
-        self.url = url
+              let url = URL(string: apiURL + percentEncoding) else {
+            return []
+        }
+        return try await withCheckedThrowingContinuation { continuation in
+            DispatchQueue.global().async {
+                do {
+                    let doc = try XML(url: url, encoding: .utf8)
+                    let suggestions = doc.xpath("//suggestion").compactMap { $0["data"] }
+                    continuation.resume(returning: suggestions)
+                }
+                catch {
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
     }
-    
-    func getSuggestion() async throws -> [String] {
-           return try await withCheckedThrowingContinuation { continuation in
-               do {
-                   let doc = try XML(url: url, encoding: .utf8)
-                   let suggestions = doc.xpath("//suggestion").compactMap { $0["data"] }
-                   continuation.resume(returning: suggestions)
-               }
-               catch {
-                   continuation.resume(throwing: error)
-               }
-           }
-       }
 }
